@@ -1,0 +1,34 @@
+---
+title: "About this website"
+output: 
+  html_document: 
+    theme: readable
+---
+
+``{r, echo=FALSE, warning=FALSE}  
+library(htmltools)  
+thumbnail <- function(title, img, href, caption = TRUE) {  
+  div(class = "col-sm-4",  
+      a(class = "thumbnail", title = title, href = href,  
+        img(src = img),  
+        div(class = ifelse(caption, "caption", ""),  
+          ifelse(caption, title, "")  
+        )  
+      )  
+  )  
+}  
+``
+
+``{r, echo=FALSE}
+thumbnail("Apple", "images/apple.png", "https://en.wikipedia.org/wiki/Apple")
+thumbnail("Grape", "images/grape.png", "https://en.wikipedia.org/wiki/Grape")
+thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
+``
+
+
+More about this webiste to come *soon*!
+
+```{r, child="footer.Rmd"}
+
+```
+

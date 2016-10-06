@@ -1,0 +1,188 @@
+---
+output: 
+  html_document: 
+    theme: readable
+---
+
+```{r Load library, echo=FALSE, warning=FALSE, message=FALSE}
+library("tidyr")
+library("lubridate")
+library("dplyr")
+library("ggplot2")
+```
+
+```{r Load data, echo=FALSE, warning=FALSE, message=FALSE, cache=TRUE}
+van <- read.csv("C:/Users/gio/Google Drive/RAW/RAW Van Wert Flow Data Table 2001-2008.csv",
+              header = TRUE, stringsAsFactors = FALSE)
+van <- van[!(is.na(van$Calculated_flow_rate) & is.na(van$Flow_link_flow_rate)),]
+col <- which(colnames(van) %in% c("Unique_record", 
+                                "Site", 
+                                "Sample_method",
+                                "Lab_id",
+                                "Pick_up_date",
+                                "Pick_up_time",
+                                "Bottle",
+                                "Bottle_level"))
+van <- as.data.frame(van[ , -col])
+van$Location <- as.factor(van$Location)
+van$Sampler_date <- as.POSIXct(van$Sampler_date)
+van$Sampler_time <- format(as.POSIXct(van$Sampler_time), "%H:%M")
+van$Flow_data_comments <- NULL
+van$year <- year(van$Sampler_date)
+van$timestamp <- parse_date_time(paste(van$Sampler_date, van$Sampler_time), "Ymd_hms", truncated = 1)
+```
+---
+title: "VANWERT"
+author: "FLOW DATA"
+output: html_document
+---
+<br>
+This page contains information about data tidying process of VANWERT flow data. All figures and discussions below are based on the data present in [**Van Wert Flow Data Table 2001-2008.csv**](https://drive.google.com/file/d/0B2u8Cy0x52GtNmcyZjJXNnYxX2s/view?usp=sharing) table, which was exported from WRSIS MS Access database. 
+
+Each data type was scrutinized to eliminate any redundancy or error before entering into the TD database. 
+<br>  
+
+***
+
+> Board Height  
+
+Column name(s):  
+- Top_Board = *Height of board(s) in control structure.  Units are in meters.*  
+- Board_height = *Height of board(s) in control structure.  Units are in inches.*  
+  
+Both **"Top_Board"** and **"Board_height"** contains information about outlet height in the control structure. According to the WRSIS data library (see "WRSIS database tables and fields.xlsx"), the former has values reported in meters, while the latter is reported in inches. Both data was separately plotted to see if those values were identical and/or complementary  (i.e. if data in one field is completely represented in other field).  
+
+```{r Plot board height, echo=FALSE, fig.width=10, fig.height=4, cache=TRUE}
+qplot(data= van, x=timestamp, y=Top_Board, na.rm=T, color=Location) + 
+  theme(axis.title.x=element_blank(), 
+        axis.text.x=element_blank(), 
+        axis.ticks.x=element_blank())
+qplot(data=van, x=timestamp, y=Board_height, na.rm = TRUE, color=Location)
+```
+
+Figures shows that **"Top_Board"** and **"Board_height"** are complementary to each other. In other words, data present in one column can fill in the gaps of other column, and vice versa. Furthermore, the outlet height only overlaps in 2007 at **"WET OUT"** location. But this overlapping data do not agree with each other. It was assumed that **"Top_Board"** data is more accurate during that period (in 2007). Hence when data from these two columns were merged, **"Boadrd_height"** values for 2007 was omitted (see figure below). 
+
+```{r Plot combined board height, echo=FALSE, fig.width=10, fig.height=4, cache=TRUE}
+van$Board_height <- van$Board_height*0.0254
+van$Top_Board[van$year==2005] <- van$Board_height[van$year==2005]
+qplot(data=van, x=timestamp, y=Top_Board, na.rm=T, color=Location)
+```
+
+* 2009 board height data (from file name: RAW Van Wert Wetland Nutrient Removal Test 2009.csv) was added to the above data, but not shown here.
+
+
+***
+
+> Stage  
+
+Column name(s):  
+- Stage = *Level in meters.  255255 = error reading because there was no power.*  
+- Adjusted_stage = *Adjusted level readings in meters.  Usually readings relative to the floor of the control structure, used when bubbler line is off floor.*  
+  
+Both **"Stage"** and **"Adjusted_stage"** contains information about water level at the outlet and/or inlet of the reservoir, wetland and offsite (location where water leaves the research site). This data along with board and weephole heights were used to calculate flow rate. Hence, quality of these data directly effects accuracy of flow estimation. To see how all these three data ("Stage", "Adjusted_stage", and "Top_Board") relate to each other, a code was run to plot them together.
+
+<span style="color:green">**green**</span> = Stage
+<span style="color:blue">**blue**</span> = Adjusted_stage
+<span style="color:black">**black**</span> = Top_Board
+
+```{r Plot stage, echo=FALSE, fig.width=10, fig.height=6, cache=TRUE}
+ggplot(data=van, aes(x=timestamp, y=Stage)) + 
+  geom_point(na.rm=T, alpha = 0.1, color="green") + ylim(c(0,5)) + facet_grid(Location ~ .) + 
+  geom_point(aes(x=timestamp, y = Adjusted_stage), color = "blue", alpha = 0.1, na.rm=T) + 
+  geom_point(aes(x=timestamp, y=Top_Board), color="black", alpha=0.2, na.rm=T)
+```
+
+To better observe the data let's zoom in on each year. Below you can find plots for years: 2001, 2005, 2007 and 2008. Data from 2002 is not shown here since there is only **"Stage"** data available (no **"Adjusted_stage"** or **"Top_Board"** to compare with). There is no data in 2004 and 2006.  
+
+
+
+```{r Plot stage 2001, echo=FALSE, fig.width=10, fig.height=2.5, cache=TRUE}
+ggplot(data=van[van$year == 2001 & !is.na(van$year), ], aes(x=timestamp, y=Stage)) + 
+  geom_point(na.rm=T, alpha = 0.1, color="green") + ylim(c(0,1)) + facet_grid(Location ~ .) + 
+  geom_point(aes(x=timestamp, y = Adjusted_stage), color = "blue", alpha = 0.1, na.rm=T) + 
+  geom_line(aes(x=timestamp, y=Top_Board), size= 1.2, color="black", na.rm=T) +
+  ggtitle("Year 2001")
+```
+
+```{r Plot stage 2005, echo=FALSE, fig.width=10, fig.height=4.2, cache=TRUE}
+ggplot(data=van[van$year == 2005 & !is.na(van$year) & van$Location != "RES OUT", ], 
+       aes(x=timestamp, y=Stage)) + 
+  geom_point(na.rm=T, alpha = 0.1, color="green") + ylim(c(0,2)) + facet_grid(Location ~ .) + 
+  geom_point(aes(x=timestamp, y = Adjusted_stage), color = "blue", alpha = 0.1, na.rm=T) + 
+  geom_line(aes(x=timestamp, y=Top_Board), size= 1.2, color="black", na.rm=T) +
+  ggtitle("Year 2005")
+```
+
+```{r Plot stage 2007, echo=FALSE, fig.width=10, fig.height=6, cache=TRUE}
+ggplot(data=van[van$year == 2007 & !is.na(van$year), ], aes(x=timestamp, y=Stage)) + 
+  geom_point(na.rm=T, alpha = 0.1, color="green") + ylim(c(0,2)) + facet_grid(Location ~ .) + 
+  geom_point(aes(x=timestamp, y = Adjusted_stage), color = "blue", alpha = 0.1, na.rm=T) + 
+  geom_line(aes(x=timestamp, y=Top_Board), size= 1.2, color="black", na.rm=T) +
+  ggtitle("Year 2007")
+```
+
+```{r Plot stage 2008, echo=FALSE, fig.width=10, fig.height=6, cache=TRUE}
+ggplot(data=van[van$year == 2008 & !is.na(van$year), ], aes(x=timestamp, y=Stage)) + 
+  geom_point(na.rm=T, alpha = 0.1, color="green") + ylim(c(0,2)) + facet_grid(Location ~ .) + 
+  geom_point(aes(x=timestamp, y = Adjusted_stage), color = "blue", alpha = 0.1, na.rm=T) + 
+  geom_line(aes(x=timestamp, y=Top_Board), size= 1.2, color="black", na.rm=T) +
+  ggtitle("Year 2008")
+```
+
+
+***
+> Velocity 
+
+Flow velocity data is available only at "OFFSITE" location for years 2001-2002. We plotted "Velocity" (black) along with "Stage" (green) data to show relationship between this two. This dependence can be employed to estimate stage based on velocity when there is not stage data (between November 2011 and March 2012). 
+
+```{r Plot velocity, echo=FALSE, fig.width=10, fig.height=6, cache=TRUE}
+ggplot(data=van[van$year %in% 2001:2002 & !is.na(van$year), ], aes(x=timestamp, y=Velocity)) + 
+  geom_point(na.rm=T, alpha = 0.2) + ylim(c(0,1)) + facet_grid(Location ~ .) + 
+  geom_line(aes(x=timestamp, y=Stage), color = "green", alpha = 0.4, na.rm=T)
+```
+
+```{r Plot velocity 2001, echo=FALSE, fig.width=10, fig.height=6, cache=TRUE}
+ggplot(data=van[van$timestamp < "2001-07-08 12:00:00 UTC" & !is.na(van$year), ], 
+       aes(x=timestamp, y=Velocity)) + 
+  geom_point(na.rm=T, alpha = 0.2) + ylim(c(0,1)) + facet_grid(Location ~ .) + 
+  geom_line(aes(x=timestamp, y=Stage), color = "green", alpha = 0.4, size = 1.4, na.rm=T) +
+  ggtitle("Year 2001")
+```
+
+***
+> Flow
+
+Column name(s):  
+- Calculated_flow_rate = *Manually calculated flow rates (m3/hr).*  
+- Flow_link_flow_rate = *Flow rates calculated by Isco's Flowlink program.  Units in m3/hr.*  
+  
+Both **"Calculated_flow_rate"** and **"Flow_link_flow_rate"** contains information about flow in m3/hr. Like earlier, we separately plotted both data to see if those values were identical and/or complementary  (i.e. if data in one field is completely represented in other field).
+
+```{r Plot flow, echo=FALSE, fig.width=10, fig.height=6, cache=TRUE}
+qplot(data= van[van$Calculated_flow_rate < 100000, ], 
+      x=timestamp, y=Calculated_flow_rate, na.rm=T, color=Location) + 
+  theme(axis.title.x = element_blank())
+qplot(data=van, x=timestamp, y=Flow_link_flow_rate, na.rm = TRUE, color=Location)
+```
+
+As you can see, **"Calculated_flow_rate"** contains data from years 2005-2008, while **"Flow_link_flow_rate"** includes only 2001-2002 data (form **"OFFSITE"** location). Hence these two columns can be combined without any problem. However there are few issues that need to be addressed:  
+1. negative flow rate values  (see figure for **"Flow_link_flow_rate"** )  
+2. unrealistically high flow rate values (max flow rate in 2007 is equivalent of [Missouri river average discharge rate](https://en.wikipedia.org/wiki/Missouri_River) of 2,445 m^3^/s)  
+
+First problem was resolved by removing all negative flow values. But the suspiciously <span style="color:red">**high flow rate still need to be addressed**</span>.
+  
+```{r Plot combined flow, echo=FALSE, fig.width=10, fig.height=6, cache=TRUE}
+van$Flow_link_flow_rate[van$Flow_link_flow_rate < 0] <- NA
+van$Calculated_flow_rate[van$year %in% 2001:2002 & !is.na(van$year)] <-
+  van$Flow_link_flow_rate[van$year %in% 2001:2002 & !is.na(van$year)]
+qplot(data= van[van$Calculated_flow_rate < 100000, ], 
+      x=timestamp, y=Calculated_flow_rate, na.rm=T, color=Location)
+```
+
+<br>
+<br>  
+
+
+
+***  
+###### This material is based upon work that is supported by the National Institute of Food and Agriculture, U.S. Department of Agriculture, under award number 2015-68007-23193, "Managing Water for Increased Resiliency of Drained Agricultural Landscapes." Any opinions, findings, conclusions, or recommendations expressed in this publication are those of the author(s) and do not necessarily reflect the view of the U.S. Department of Agriculture.

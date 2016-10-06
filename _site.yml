@@ -1,0 +1,61 @@
+name: "TD Data Review"
+output_dir: "."
+exclude: ["*.csv"]
+navbar:
+  title: "TD"
+  type: inverse
+  left:
+#    - text: "Home"
+#      href: index.html
+    - text: "Data Type"
+      href: FULTON.html
+      menu:
+        - text: "Flow"
+        - text: "Water Table"
+        - text: "Soil"
+        - text: "Agronomic"
+    - text: "Sites by States"
+      menu:
+        - text: "Iowa"
+        - text:  "SERF_IA"
+        - text: "---"
+        - text: "Indiana"
+        - text: "DPAC"
+        - text: "---"
+        - text: "Minnesota"
+        - text: "HICKS_B"
+        - text: "---"
+        - text: "Missouri"
+        - text: "MUDS1"
+        - text: "MUDS2"
+        - text: "MUDS3_OLD"
+        - text: "MUDS3_NEW"
+        - text: "MUDS4"
+        - text: "---"
+        - text: "North Carolina"
+        - text: "TIDE_OLD"
+        - text: "---"
+        - text: "Ohio"
+        - text: "DEFI_R"
+          href: FULTON_flow_data_review_2000-2011.html
+        - text: "FULTON"
+          href: FULTON_flow_data_review_2000-2011.html
+        - text: "VANWERT"
+          href: VANWERT_flow_data_review_2001-2008.html
+  right:
+    - text: "TD Internal Website"
+      href: https://sites.google.com/site/transformingdrainage/researchsites 
+    - icon: ion-social-github 
+      href: https://github.com/TransformingDrainage 
+    - icon: ion-social-twitter 
+      href: https://twitter.com/TD_drainage 
+    - icon: ion-social-google 
+      href: https://drive.google.com/drive/folders/0B-gT6NSY_M5HfnJ4bWdFU09nR1RIWU1qV1ZzYmFwVzBkeC1MTWo0aFgzUXU2cjdzeWd5Tmc 
+output:
+  html_document:
+#  theme: readable
+#  hilight: textmate
+#  include:
+#    after_body: footer.html
+# css: styles.css
+  

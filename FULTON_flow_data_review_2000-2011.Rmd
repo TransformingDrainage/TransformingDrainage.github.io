@@ -1,0 +1,53 @@
+---
+output: 
+  html_document: 
+    theme: readable
+---
+
+```{r Load Library, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(ggmap)
+library(gridExtra)
+library(maps)
+library(plyr)
+library(dplyr)
+library(pander)
+```
+
+```{r Load data, echo=FALSE, warning=FALSE, message=FALSE, cache=TRUE}
+load(file = "C:/Users/gio/Documents/GitHubOLD/TD/FULTON/fulton_df_2000-2011.Rda")
+```
+
+---
+title: "FULTON"
+author: "FLOW DATA"
+output: html_document
+---
+<br>
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+FULTON %>%
+  group_by(location) %>% 
+  summarize(MIN = min(flow, na.rm = T), AVE = mean(flow, na.rm = T), MAX = max(flow, na.rm = T)) %>%
+  pander()
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+ggplot(data=FULTON, aes(x=timestamp, y=flow)) + 
+  geom_point(size=0.5, alpha=0.2, na.rm = TRUE) + 
+  facet_grid(location ~ ., scales = "free")
+```
+
+Close-up for one year:
+
+```{r, warning=FALSE, echo=FALSE}
+ggplot(data=FULTON[FULTON$year==2001, ], aes(x=timestamp, y=flow)) + 
+  geom_point(size=0.5, alpha=0.2, na.rm = TRUE, color = "blue") + 
+  facet_grid(location ~ ., scales = "free")
+```
