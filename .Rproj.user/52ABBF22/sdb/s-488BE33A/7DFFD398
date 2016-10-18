@@ -1,4 +1,5 @@
 {
+    "collab_server" : "",
     "contents" : "---\ntitle: \"Data Review\"\noutput: \n  html_document: \n    theme: readable\n---\n\n***\n\nThis site is developed to promote data review for Transforming Drainage project. \n\nYou can find plots and data summaries from different sites. The main goal of the webiste is to insure hight quality of data by detailed analysis of the raw data.\n\n<br>\n<br>  \n\n\n\n***  \n###### This material is based upon work that is supported by the National Institute of Food and Agriculture, U.S. Department of Agriculture, under award number 2015-68007-23193, \"Managing Water for Increased Resiliency of Drained Agricultural Landscapes.\" Any opinions, findings, conclusions, or recommendations expressed in this publication are those of the author(s) and do not necessarily reflect the view of the U.S. Department of Agriculture.",
     "created" : 1475780147654.000,
     "dirty" : false,
@@ -7,11 +8,14 @@
     "hash" : "349086618",
     "id" : "7DFFD398",
     "lastKnownWriteTime" : 1475793719,
+    "last_content_update" : 0,
     "path" : "~/GitHub/TransformingDrainage/TransformingDrainage.github.io/index.Rmd",
     "project_path" : "index.Rmd",
     "properties" : {
+        "docOutlineVisible" : "0"
     },
     "relative_order" : 2,
     "source_on_save" : false,
+    "source_window" : "",
     "type" : "r_markdown"
 }
