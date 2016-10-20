@@ -1,4 +1,5 @@
 {
+    "collab_server" : "",
     "contents" : "name: \"TD Data Review\"\noutput_dir: \".\"\nexclude: [\"*.csv\"]\nnavbar:\n  title: \"TD\"\n  type: inverse\n  left:\n#    - text: \"Home\"\n#      href: index.html\n    - text: \"Data Type\"\n      href: FULTON.html\n      menu:\n        - text: \"Flow\"\n        - text: \"Water Table\"\n        - text: \"Soil\"\n        - text: \"Agronomic\"\n    - text: \"Sites by States\"\n      menu:\n        - text: \"Iowa\"\n        - text:  \"SERF_IA\"\n        - text: \"---\"\n        - text: \"Indiana\"\n        - text: \"DPAC\"\n        - text: \"---\"\n        - text: \"Minnesota\"\n        - text: \"HICKS_B\"\n        - text: \"---\"\n        - text: \"Missouri\"\n        - text: \"MUDS1\"\n        - text: \"MUDS2\"\n        - text: \"MUDS3_OLD\"\n        - text: \"MUDS3_NEW\"\n        - text: \"MUDS4\"\n        - text: \"---\"\n        - text: \"North Carolina\"\n        - text: \"TIDE_OLD\"\n        - text: \"---\"\n        - text: \"Ohio\"\n        - text: \"DEFI_R\"\n          href: FULTON_flow_data_review_2000-2011.html\n        - text: \"FULTON\"\n          href: FULTON_flow_data_review_2000-2011.html\n        - text: \"VANWERT\"\n          href: VANWERT_flow_data_review_2001-2008.html\n  right:\n    - text: \"TD Internal Website\"\n      href: https://sites.google.com/site/transformingdrainage/researchsites \n    - icon: ion-social-github \n      href: https://github.com/TransformingDrainage \n    - icon: ion-social-twitter \n      href: https://twitter.com/TD_drainage \n    - icon: ion-social-google \n      href: https://drive.google.com/drive/folders/0B-gT6NSY_M5HfnJ4bWdFU09nR1RIWU1qV1ZzYmFwVzBkeC1MTWo0aFgzUXU2cjdzeWd5Tmc \noutput:\n  html_document:\n#  theme: readable\n#  hilight: textmate\n#  include:\n#    after_body: footer.html\n# css: styles.css\n  ",
     "created" : 1475780236007.000,
     "dirty" : false,
@@ -7,11 +8,13 @@
     "hash" : "876928972",
     "id" : "B09CCFB7",
     "lastKnownWriteTime" : 1475796412,
+    "last_content_update" : 0,
     "path" : "~/GitHub/TransformingDrainage/TransformingDrainage.github.io/_site.yml",
     "project_path" : "_site.yml",
     "properties" : {
     },
     "relative_order" : 3,
     "source_on_save" : false,
+    "source_window" : "",
     "type" : "yaml"
 }
