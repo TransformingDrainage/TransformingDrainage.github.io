@@ -20,9 +20,9 @@ thumbnail <- function(title, img, href, caption = TRUE) {
 ```
 
 ```{r, echo=FALSE}
-thumbnail("Apple", "_Images/apple.png", "https://en.wikipedia.org/wiki/Apple")
-thumbnail("Grape", "_Images/grape.png", "https://en.wikipedia.org/wiki/Grape")
-thumbnail("Peach", "_Images/peach.png", "https://en.wikipedia.org/wiki/Peach")
+thumbnail("Apple", "~/GitHub/TransformingDrainage/TransformingDrainage.github.io/images/apple.png", "https://en.wikipedia.org/wiki/Apple")
+thumbnail("Grape", "~/GitHub/TransformingDrainage/TransformingDrainage.github.io/images/grapes.png", "https://en.wikipedia.org/wiki/Grape")
+thumbnail("Peach", "~/GitHub/TransformingDrainage/TransformingDrainage.github.io/images/peach.png", "https://en.wikipedia.org/wiki/Peach")
 ```
 
 
