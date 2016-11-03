@@ -95,6 +95,7 @@ button.code-folding-btn:focus {
 }
 </style>
 
+
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -199,6 +200,9 @@ $(document).ready(function () {
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Iowa</li>
     <li class="dropdown-header">SERF_IA</li>
+    <li>
+      <a href="about.html">SERF_IA</a>
+    </li>
     <li class="divider"></li>
     <li class="dropdown-header">Indiana</li>
     <li class="dropdown-header">DPAC</li>
@@ -265,12 +269,26 @@ $(document).ready(function () {
 </div>
 
 
-<p><code>{r, echo=FALSE, warning=FALSE}   library(htmltools)   thumbnail &lt;- function(title, img, href, caption = TRUE) {     div(class = &quot;col-sm-4&quot;,         a(class = &quot;thumbnail&quot;, title = title, href = href,           img(src = img),           div(class = ifelse(caption, &quot;caption&quot;, &quot;&quot;),             ifelse(caption, title, &quot;&quot;)           )         )     )   }</code></p>
-<p><code>{r, echo=FALSE} thumbnail(&quot;Apple&quot;, &quot;images/apple.png&quot;, &quot;https://en.wikipedia.org/wiki/Apple&quot;) thumbnail(&quot;Grape&quot;, &quot;images/grape.png&quot;, &quot;https://en.wikipedia.org/wiki/Grape&quot;) thumbnail(&quot;Peach&quot;, &quot;images/peach.png&quot;, &quot;https://en.wikipedia.org/wiki/Peach&quot;)</code></p>
+<p><div class="col-sm-4">
+<a class="thumbnail" title="Apple" href="https://en.wikipedia.org/wiki/Apple">
+<img src="_Images/apple.png"/>
+<div class="caption">Apple</div>
+</a>
+</div><div class="col-sm-4">
+<a class="thumbnail" title="Grape" href="https://en.wikipedia.org/wiki/Grape">
+<img src="_Images/grape.png"/>
+<div class="caption">Grape</div>
+</a>
+</div><div class="col-sm-4">
+<a class="thumbnail" title="Peach" href="https://en.wikipedia.org/wiki/Peach">
+<img src="_Images/peach.png"/>
+<div class="caption">Peach</div>
+</a>
+</div></p>
 <p>More about this webiste to come <em>soon</em>!</p>
 <hr />
-<div id="this-material-is-based-upon-work-that-is-supported-by-the-national-institute-of-food-and-agriculture-u.s.-department-of-agriculture-under-award-number-2015-68007-23193-amanaging-water-for-increased-resiliency-of-drained-agricultural-landscapes.a-any-opinions-findings-conclusions-or-recommendations-expressed-in-this-publication-are-those-of-the-authors-and-do-not-necessarily-reflect-the-view-of-the-u.s.-department-of-agriculture." class="section level6">
-<h6>This material is based upon work that is supported by the National Institute of Food and Agriculture, U.S. Department of Agriculture, under award number 2015-68007-23193, â€œManaging Water for Increased Resiliency of Drained Agricultural Landscapes.â€ Any opinions, findings, conclusions, or recommendations expressed in this publication are those of the author(s) and do not necessarily reflect the view of the U.S. Department of Agriculture.</h6>
+<div id="this-material-is-based-upon-work-that-is-supported-by-the-national-institute-of-food-and-agriculture-u.s.-department-of-agriculture-under-award-number-2015-68007-23193-managing-water-for-increased-resiliency-of-drained-agricultural-landscapes.-any-opinions-findings-conclusions-or-recommendations-expressed-in-this-publication-are-those-of-the-authors-and-do-not-necessarily-reflect-the-view-of-the-u.s.-department-of-agriculture." class="section level6">
+<h6>This material is based upon work that is supported by the National Institute of Food and Agriculture, U.S. Department of Agriculture, under award number 2015-68007-23193, “Managing Water for Increased Resiliency of Drained Agricultural Landscapes.” Any opinions, findings, conclusions, or recommendations expressed in this publication are those of the author(s) and do not necessarily reflect the view of the U.S. Department of Agriculture.</h6>
 </div>
 
 
@@ -284,6 +302,7 @@ $(document).ready(function () {
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 

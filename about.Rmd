@@ -5,7 +5,7 @@ output:
     theme: readable
 ---
 
-``{r, echo=FALSE, warning=FALSE}  
+```{r, echo=FALSE, warning=FALSE}  
 library(htmltools)  
 thumbnail <- function(title, img, href, caption = TRUE) {  
   div(class = "col-sm-4",  
@@ -17,13 +17,13 @@ thumbnail <- function(title, img, href, caption = TRUE) {
       )  
   )  
 }  
-``
+```
 
-``{r, echo=FALSE}
-thumbnail("Apple", "images/apple.png", "https://en.wikipedia.org/wiki/Apple")
-thumbnail("Grape", "images/grape.png", "https://en.wikipedia.org/wiki/Grape")
-thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
-``
+```{r, echo=FALSE}
+thumbnail("Apple", "_Images/apple.png", "https://en.wikipedia.org/wiki/Apple")
+thumbnail("Grape", "_Images/grape.png", "https://en.wikipedia.org/wiki/Grape")
+thumbnail("Peach", "_Images/peach.png", "https://en.wikipedia.org/wiki/Peach")
+```
 
 
 More about this webiste to come *soon*!
