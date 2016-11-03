@@ -1,4 +1,5 @@
 {
+    "collab_server" : "",
     "contents" : "---\noutput: \n  html_document: \n    theme: readable\n---\n\n```{r Load Library, echo=FALSE, message=FALSE, warning=FALSE}\nlibrary(ggplot2)\nlibrary(ggmap)\nlibrary(gridExtra)\nlibrary(maps)\nlibrary(plyr)\nlibrary(dplyr)\nlibrary(pander)\n```\n\n```{r Load data, echo=FALSE, warning=FALSE, message=FALSE, cache=TRUE}\nload(file = \"C:/Users/gio/Documents/GitHubOLD/TD/FULTON/fulton_df_2000-2011.Rda\")\n```\n\n---\ntitle: \"FULTON\"\nauthor: \"FLOW DATA\"\noutput: html_document\n---\n<br>\n\nThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.\n\nWhen you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\n```{r}\nFULTON %>%\n  group_by(location) %>% \n  summarize(MIN = min(flow, na.rm = T), AVE = mean(flow, na.rm = T), MAX = max(flow, na.rm = T)) %>%\n  pander()\n```\n\nYou can also embed plots, for example:\n\n```{r, echo=FALSE}\nggplot(data=FULTON, aes(x=timestamp, y=flow)) + \n  geom_point(size=0.5, alpha=0.2, na.rm = TRUE) + \n  facet_grid(location ~ ., scales = \"free\")\n```\n\nClose-up for one year:\n\n```{r, warning=FALSE, echo=FALSE}\nggplot(data=FULTON[FULTON$year==2001, ], aes(x=timestamp, y=flow)) + \n  geom_point(size=0.5, alpha=0.2, na.rm = TRUE, color = \"blue\") + \n  facet_grid(location ~ ., scales = \"free\")\n```\n",
     "created" : 1475796262965.000,
     "dirty" : false,
@@ -7,11 +8,13 @@
     "hash" : "2537731876",
     "id" : "836F0658",
     "lastKnownWriteTime" : 1475796276,
+    "last_content_update" : 0,
     "path" : "~/GitHub/TransformingDrainage/TransformingDrainage.github.io/FULTON_flow_data_review_2000-2011.Rmd",
     "project_path" : "FULTON_flow_data_review_2000-2011.Rmd",
     "properties" : {
     },
     "relative_order" : 3,
     "source_on_save" : false,
+    "source_window" : "",
     "type" : "r_markdown"
 }
